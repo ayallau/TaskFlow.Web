@@ -1,5 +1,6 @@
 import "./App.css";
 import { Card } from "./components/shared/Card";
+import { Section } from "./components/shared/Section";
 import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
 
@@ -58,10 +59,7 @@ function App() {
       </nav>
       <main>
         <h2>Welcome to {appName}</h2>
-        <section>
-          <p>
-            <b>User Details</b>
-          </p>
+        <Section title="Users">
           <Card>
             <UserCard
               id={users[0].id}
@@ -70,13 +68,15 @@ function App() {
               isActive={users[0].isActive}
             />
           </Card>
-          <UserCard
-            id={users[1].id}
-            name={users[1].name}
-            role={users[1].role}
-            isActive={users[1].isActive}
-          />
-        </section>
+          <Card>
+            <UserCard
+              id={users[1].id}
+              name={users[1].name}
+              role={users[1].role}
+              isActive={users[1].isActive}
+            />
+          </Card>
+        </Section>
         <section>
           <h2>Task List</h2>
           <TaskCard
