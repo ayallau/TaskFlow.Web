@@ -1,4 +1,5 @@
 import "./App.css";
+import { Card } from "./components/shared/Card";
 import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
 
@@ -61,12 +62,14 @@ function App() {
           <p>
             <b>User Details</b>
           </p>
-          <UserCard
-            id={users[0].id}
-            name={users[0].name}
-            role={users[0].role}
-            isActive={users[0].isActive}
-          />
+          <Card>
+            <UserCard
+              id={users[0].id}
+              name={users[0].name}
+              role={users[0].role}
+              isActive={users[0].isActive}
+            />
+          </Card>
           <UserCard
             id={users[1].id}
             name={users[1].name}
