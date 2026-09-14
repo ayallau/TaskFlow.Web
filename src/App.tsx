@@ -1,4 +1,7 @@
 import "./App.css";
+import { Header } from "./components/layout/Header";
+import { MainContent } from "./components/layout/MainContent";
+import { Sidebar } from "./components/layout/Sidebar";
 import { Card } from "./components/shared/Card";
 import { Section } from "./components/shared/Section";
 import { TaskCard } from "./components/TaskCard";
@@ -41,24 +44,11 @@ const tasks = [
 function App() {
   return (
     <>
-      <header>
-        <h1>{appName}</h1>
-      </header>
-      <nav>
-        <ul>
-          <li>
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">About</a>
-          </li>
-          <li>
-            <a href="#">Contact</a>
-          </li>
-        </ul>
-      </nav>
-      <main>
-        <h2>Welcome to {appName}</h2>
+      <Header title={appName} />
+
+      <Sidebar />
+
+      <MainContent>
         <Section title="Users">
           <Card>
             <UserCard
@@ -77,24 +67,27 @@ function App() {
             />
           </Card>
         </Section>
-        <section>
-          <h2>Task List</h2>
-          <TaskCard
-            id={tasks[0].id}
-            title={tasks[0].title}
-            status={tasks[0].status}
-            priority={tasks[0].priority}
-            assignee={tasks[0].assignee}
-          />
-          <TaskCard
-            id={tasks[1].id}
-            title={tasks[1].title}
-            status={tasks[1].status}
-            priority={tasks[1].priority}
-            assignee={tasks[1].assignee}
-          />
-        </section>
-      </main>
+        <Section title="Tasks">
+          <Card>
+            <TaskCard
+              id={tasks[0].id}
+              title={tasks[0].title}
+              status={tasks[0].status}
+              priority={tasks[0].priority}
+              assignee={tasks[0].assignee}
+            />
+          </Card>
+          <Card>
+            <TaskCard
+              id={tasks[1].id}
+              title={tasks[1].title}
+              status={tasks[1].status}
+              priority={tasks[1].priority}
+              assignee={tasks[1].assignee}
+            />
+          </Card>
+        </Section>
+      </MainContent>
       <footer>
         <p>Copyright © 2026 Ayal Laufer</p>
       </footer>
