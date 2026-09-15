@@ -26,10 +26,16 @@ const tasks: Task[] = [
   },
 ];
 
+const selectedStatus = "open";
+
+const searchTerm = "react";
+
 export function TaskList() {
-  const selectedStatus = "open";
   const visibleTasks = tasks
     .filter((task) => task.status === selectedStatus)
+    .filter((task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
     .sort((a, b) => a.title.localeCompare(b.title));
 
   return (
