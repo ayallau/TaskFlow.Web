@@ -6,6 +6,7 @@ import { Card } from "./components/shared/Card";
 import { Section } from "./components/shared/Section";
 import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
+import type { Task } from "./types/task";
 
 const appName = "TaskFlow";
 
@@ -24,19 +25,19 @@ const users = [
   },
 ];
 
-const tasks = [
+const tasks: Task[] = [
   {
     id: 1,
     title: "Learn Props",
-    status: "In Progress",
-    priority: "High",
+    status: "open",
+    priority: "high",
     assignee: "Ayal",
   },
   {
     id: 2,
     title: "Build UserCard",
-    status: "To Do",
-    priority: "Medium",
+    status: "done",
+    priority: "medium",
     assignee: "Dana",
   },
 ];
