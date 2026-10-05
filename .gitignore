@@ -11,6 +11,7 @@ node_modules/
 /dist
 /build
 /out
+/git-archive-project-state-*.zip
 /.next
 /out-tsc
 
