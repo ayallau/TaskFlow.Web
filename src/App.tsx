@@ -7,6 +7,7 @@ import { Section } from "./components/shared/Section";
 import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
 import type { Task } from "./types/task";
+import { useState } from "react";
 
 const appName = "TaskFlow";
 
@@ -25,7 +26,7 @@ const users = [
   },
 ];
 
-const tasks: Task[] = [
+const initialTasks: Task[] = [
   {
     id: 1,
     title: "Learn Props",
@@ -43,6 +44,23 @@ const tasks: Task[] = [
 ];
 
 function App() {
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+
+  function handleAddTask() {
+    const newTask: Task = {
+      id: Date.now(),
+      title: "New Task",
+      status: "open",
+      priority: "medium",
+      assignee: "Ayal",
+    };
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  }
+
+  function handleDeleteTask(taskId: number) {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  }
+
   return (
     <>
       <Header title={appName} />
@@ -69,24 +87,19 @@ function App() {
           </Card>
         </Section>
         <Section title="Tasks">
-          <Card>
-            <TaskCard
-              id={tasks[0].id}
-              title={tasks[0].title}
-              status={tasks[0].status}
-              priority={tasks[0].priority}
-              assignee={tasks[0].assignee}
-            />
-          </Card>
-          <Card>
-            <TaskCard
-              id={tasks[1].id}
-              title={tasks[1].title}
-              status={tasks[1].status}
-              priority={tasks[1].priority}
-              assignee={tasks[1].assignee}
-            />
-          </Card>
+          <button type="button" onClick={handleAddTask}>
+            Add Task
+          </button>
+
+          {tasks.map((task) => (
+            <Card key={task.id}>
+              <TaskCard {...task} />
+
+              <button type="button" onClick={() => handleDeleteTask(task.id)}>
+                Delete
+              </button>
+            </Card>
+          ))}
         </Section>
       </MainContent>
       <footer>
