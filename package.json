@@ -14,6 +14,7 @@
     "archive": "node scripts/run_git_archive.js"
   },
   "dependencies": {
+    "prettier": "^3.9.9",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
