@@ -1,6 +1,6 @@
 export type User = {
-    id: string;
-    name: string;
-    role: string;
-    isActive: boolean; 
+  id: string;
+  name: string;
+  role: string;
+  isActive: boolean;
 };
