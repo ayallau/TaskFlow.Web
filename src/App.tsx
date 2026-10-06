@@ -8,6 +8,7 @@ import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
 import type { Task } from "./types/task";
 import { useState } from "react";
+import { Counter } from "./components/Counter";
 
 const appName = "TaskFlow";
 
@@ -81,6 +82,9 @@ function App() {
       <Sidebar />
 
       <MainContent>
+        <Section title="Counter Exercise">
+          <Counter />
+        </Section>
         <Section title="Users">
           <button type="button" onClick={handlePromoteUser}>
             Promote User
