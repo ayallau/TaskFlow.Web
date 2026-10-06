@@ -45,6 +45,8 @@ const initialTasks: Task[] = [
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentUser, setCurrentUser] = useState(users[0]);
 
   function handleAddTask() {
     const newTask: Task = {
@@ -61,6 +63,17 @@ function App() {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   }
 
+  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value);
+  }
+
+  function handlePromoteUser() {
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      role: "Senior Developer",
+    }));
+  }
+
   return (
     <>
       <Header title={appName} />
@@ -69,13 +82,11 @@ function App() {
 
       <MainContent>
         <Section title="Users">
+          <button type="button" onClick={handlePromoteUser}>
+            Promote User
+          </button>
           <Card>
-            <UserCard
-              id={users[0].id}
-              name={users[0].name}
-              role={users[0].role}
-              isActive={users[0].isActive}
-            />
+            <UserCard {...currentUser} />
           </Card>
           <Card>
             <UserCard
@@ -87,6 +98,13 @@ function App() {
           </Card>
         </Section>
         <Section title="Tasks">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            placeholder="Search tasks"
+          />
+          <p>Search: {searchTerm}</p>
           <button type="button" onClick={handleAddTask}>
             Add Task
           </button>
