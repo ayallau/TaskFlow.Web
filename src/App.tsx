@@ -8,11 +8,12 @@ import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
 import type { Task } from "./types/task";
 import { useState } from "react";
-import { Counter } from "./components/Counter";
+import { Counter } from "./components/playground/Counter";
+import type { User } from "./types/user";
 
 const appName = "TaskFlow";
 
-const users = [
+const users: User[] = [
   {
     id: "1",
     name: "Ayal",
@@ -48,6 +49,11 @@ function App() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentUser, setCurrentUser] = useState(users[0]);
+  const [isPlaygroundOpen, setIsPlaygroundOpen] = useState(false);
+
+  const visibleTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   function handleAddTask() {
     const newTask: Task = {
@@ -82,9 +88,6 @@ function App() {
       <Sidebar />
 
       <MainContent>
-        <Section title="Counter Exercise">
-          <Counter />
-        </Section>
         <Section title="Users">
           <button type="button" onClick={handlePromoteUser}>
             Promote User
@@ -101,6 +104,7 @@ function App() {
             />
           </Card>
         </Section>
+
         <Section title="Tasks">
           <input
             type="text"
@@ -108,12 +112,11 @@ function App() {
             onChange={handleSearchChange}
             placeholder="Search tasks"
           />
-          <p>Search: {searchTerm}</p>
           <button type="button" onClick={handleAddTask}>
             Add Task
           </button>
 
-          {tasks.map((task) => (
+          {visibleTasks.map((task) => (
             <Card key={task.id}>
               <TaskCard {...task} />
 
@@ -123,7 +126,20 @@ function App() {
             </Card>
           ))}
         </Section>
+
+        <button
+          type="button"
+          onClick={() => setIsPlaygroundOpen((prev) => !prev)}
+        >
+          {isPlaygroundOpen ? "Hide Exercises" : "Show Exercises"}
+        </button>
+        {isPlaygroundOpen && (
+          <Section title="Exercises">
+            <Counter />
+          </Section>
+        )}
       </MainContent>
+
       <footer>
         <p>Copyright © 2026 Ayal Laufer</p>
       </footer>

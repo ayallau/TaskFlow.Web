@@ -7,7 +7,7 @@ import type { Task } from "../types/task";
 export function TaskCard({ title, status, priority, assignee }: Task) {
   const [currentStatus, setCurrentStatus] = useState(status);
 
-  function handleToggleStatus(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleToggleStatus() {
     setCurrentStatus((previousStatus) =>
       previousStatus === "open" ? "done" : "open",
     );
