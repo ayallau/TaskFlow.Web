@@ -4,12 +4,11 @@ import { MainContent } from "./components/layout/MainContent";
 import { Sidebar } from "./components/layout/Sidebar";
 import { Card } from "./components/shared/Card";
 import { Section } from "./components/shared/Section";
-import { TaskCard } from "./components/TaskCard";
 import { UserCard } from "./components/UserCard";
-import type { Task } from "./types/task";
 import { useState } from "react";
 import { Counter } from "./components/playground/Counter";
 import type { User } from "./types/user";
+import { TasksPage } from "./components/TasksPage";
 
 const appName = "TaskFlow";
 
@@ -28,51 +27,9 @@ const users: User[] = [
   },
 ];
 
-const initialTasks: Task[] = [
-  {
-    id: 1,
-    title: "Learn Props",
-    status: "open",
-    priority: "high",
-    assignee: "Ayal",
-  },
-  {
-    id: 2,
-    title: "Build UserCard",
-    status: "done",
-    priority: "medium",
-    assignee: "Dana",
-  },
-];
-
 function App() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentUser, setCurrentUser] = useState(users[0]);
   const [isPlaygroundOpen, setIsPlaygroundOpen] = useState(false);
-
-  const visibleTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
-  function handleAddTask() {
-    const newTask: Task = {
-      id: Date.now(),
-      title: "New Task",
-      status: "open",
-      priority: "medium",
-      assignee: "Ayal",
-    };
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-  }
-
-  function handleDeleteTask(taskId: number) {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-  }
-
-  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(event.currentTarget.value);
-  }
 
   function handlePromoteUser() {
     setCurrentUser((prevUser) => ({
@@ -105,27 +62,7 @@ function App() {
           </Card>
         </Section>
 
-        <Section title="Tasks">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="Search tasks"
-          />
-          <button type="button" onClick={handleAddTask}>
-            Add Task
-          </button>
-
-          {visibleTasks.map((task) => (
-            <Card key={task.id}>
-              <TaskCard {...task} />
-
-              <button type="button" onClick={() => handleDeleteTask(task.id)}>
-                Delete
-              </button>
-            </Card>
-          ))}
-        </Section>
+        <TasksPage />
 
         <button
           type="button"
