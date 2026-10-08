@@ -3,6 +3,7 @@ import type { Task } from "../types/task";
 import { Card } from "./shared/Card";
 import { Section } from "./shared/Section";
 import { TaskCard } from "./TaskCard";
+import { TaskForm } from "./TaskForm";
 
 const initialTasks: Task[] = [
   {
@@ -29,16 +30,8 @@ export function TasksPage() {
     task.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  function handleAddTask() {
-    const newTask: Task = {
-      id: Date.now(),
-      title: "New Task",
-      status: "open",
-      priority: "medium",
-      assignee: "Ayal",
-    };
-
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+  function handleAddTask(task: Task) {
+    setTasks((prevTasks) => [...prevTasks, task]);
   }
 
   function handleDeleteTask(taskId: number) {
@@ -58,9 +51,7 @@ export function TasksPage() {
         placeholder="Search tasks"
       />
 
-      <button type="button" onClick={handleAddTask}>
-        Add Task
-      </button>
+      <TaskForm onAddTask={handleAddTask} />
 
       {visibleTasks.map((task) => (
         <Card key={task.id}>
