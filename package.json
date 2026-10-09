@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "build-ts": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check": "npm run lint && npm run build",
+    "check": "npm run lint && npm run build-ts",
     "format": "prettier src --write",
     "format:check": "prettier src --check",
     "archive": "node scripts/run_git_archive.js"
