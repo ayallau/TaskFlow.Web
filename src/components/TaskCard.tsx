@@ -1,27 +1,35 @@
-// TaskCard responsibility:
-// This component is responsible for displaying a single task's relevant information, such as title, status, priority, and assignee.
-
-import { useState } from "react";
 import type { Task } from "../types/task";
+import { Card } from "./shared/Card";
 
-export function TaskCard({ title, status, priority, assignee }: Task) {
-  const [currentStatus, setCurrentStatus] = useState(status);
+type TaskCardProps = Task & {
+  onDelete: (taskId: number) => void;
+  onToggleStatus: (taskId: number) => void;
+};
 
-  function handleToggleStatus() {
-    setCurrentStatus((previousStatus) =>
-      previousStatus === "open" ? "done" : "open",
-    );
-  }
-
+export function TaskCard({
+  id,
+  title,
+  status,
+  priority,
+  assignee,
+  onDelete,
+  onToggleStatus,
+}: TaskCardProps) {
   return (
-    <article>
+    <Card>
       <h3>{title}</h3>
-      <p>Status: {currentStatus}</p>
+      <p>Status: {status}</p>
       <p>Priority: {priority}</p>
-      <p>Assignee: {assignee}</p>
-      <button type="button" onClick={handleToggleStatus}>
-        Mark as {currentStatus === "open" ? "done" : "open"}
+
+      {assignee && <p>Assignee: {assignee}</p>}
+
+      <button type="button" onClick={() => onToggleStatus(id)}>
+        Toggle status
       </button>
-    </article>
+
+      <button type="button" onClick={() => onDelete(id)}>
+        Delete
+      </button>
+    </Card>
   );
 }

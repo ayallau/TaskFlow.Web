@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { Task } from "../types/task";
-import { Card } from "./shared/Card";
 import { Section } from "./shared/Section";
-import { TaskCard } from "./TaskCard";
 import { TaskForm } from "./TaskForm";
+import { TaskList } from "./TaskList";
+import { TaskSearch } from "./TaskSearch";
 
 const initialTasks: Task[] = [
   {
@@ -23,12 +23,8 @@ const initialTasks: Task[] = [
 ];
 
 export function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const visibleTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   function handleAddTask(task: Task) {
     setTasks((prevTasks) => [...prevTasks, task]);
@@ -38,30 +34,31 @@ export function TasksPage() {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   }
 
-  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(event.currentTarget.value);
+  function handleToggleStatus(taskId: number) {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: task.status === "open" ? "done" : "open",
+            }
+          : task,
+      ),
+    );
   }
 
   return (
     <Section title="Tasks">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        placeholder="Search tasks"
-      />
+      <TaskSearch searchTerm={searchTerm} onTextInput={setSearchTerm} />
 
       <TaskForm onAddTask={handleAddTask} />
 
-      {visibleTasks.map((task) => (
-        <Card key={task.id}>
-          <TaskCard {...task} />
-
-          <button type="button" onClick={() => handleDeleteTask(task.id)}>
-            Delete
-          </button>
-        </Card>
-      ))}
+      <TaskList
+        tasks={tasks}
+        searchTerm={searchTerm}
+        onDelete={handleDeleteTask}
+        onToggleStatus={handleToggleStatus}
+      />
     </Section>
   );
 }
