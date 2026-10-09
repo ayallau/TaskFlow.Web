@@ -1,11 +1,13 @@
+// Controlled Component
+
 type TaskSearchProps = {
   searchTerm: string;
-  onTextInput: (text: string) => void;
+  onSearchChange: (text: string) => void;
 };
 
-export function TaskSearch({ searchTerm, onTextInput }: TaskSearchProps) {
+export function TaskSearch({ searchTerm, onSearchChange }: TaskSearchProps) {
   function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
-    onTextInput(event.currentTarget.value);
+    onSearchChange(event.currentTarget.value);
   }
 
   return (

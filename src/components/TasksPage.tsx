@@ -49,7 +49,7 @@ export function TasksPage() {
 
   return (
     <Section title="Tasks">
-      <TaskSearch searchTerm={searchTerm} onTextInput={setSearchTerm} />
+      <TaskSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
       <TaskForm onAddTask={handleAddTask} />
 
