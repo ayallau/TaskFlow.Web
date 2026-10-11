@@ -11,6 +11,7 @@ node_modules/
 /dist
 /build
 /out
+/git-archive-project-state-*.zip
 /.next
 /out-tsc
 
@@ -45,10 +46,6 @@ lerna-debug.log*
 # ####################################################################
 # Visual Studio Code
 .vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
 
 # WebStorm / JetBrains
 .idea/
@@ -74,4 +71,4 @@ Desktop.ini
 # User
 # ####################################################################
 .user/*
-.user_files*
+.temp/*
