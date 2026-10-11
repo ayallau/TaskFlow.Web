@@ -12,6 +12,7 @@ const initialTasks: Task[] = [
     status: "open",
     priority: "high",
     assignee: "Ayal",
+    description: "User should know how to use props",
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const initialTasks: Task[] = [
     status: "done",
     priority: "medium",
     assignee: "Dana",
+    description: "Build a user card component",
   },
 ];
 
@@ -51,14 +53,18 @@ export function TasksPage() {
     <Section title="Tasks">
       <TaskSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-      <TaskForm onAddTask={handleAddTask} />
+      <Section title="Add Task">
+        <TaskForm onAddTask={handleAddTask} />
+      </Section>
 
-      <TaskList
-        tasks={tasks}
-        searchTerm={searchTerm}
-        onDelete={handleDeleteTask}
-        onToggleStatus={handleToggleStatus}
-      />
+      <Section title="Current Tasks">
+        <TaskList
+          tasks={tasks}
+          searchTerm={searchTerm}
+          onDelete={handleDeleteTask}
+          onToggleStatus={handleToggleStatus}
+        />
+      </Section>
     </Section>
   );
 }
