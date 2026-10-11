@@ -19,10 +19,17 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const trimmedTitle = form.title.trim();
+
+    if (!trimmedTitle) {
+      return;
+    }
+
     const newTask: Task = {
       id: Date.now(),
       status: "open",
       ...form,
+      title: trimmedTitle,
     };
 
     onAddTask(newTask);
@@ -46,8 +53,7 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
 
       <div>
         <label htmlFor="task-description">Description</label>
-        <input
-          type="text"
+        <textarea
           id="task-description"
           value={form.description}
           onChange={(event) =>

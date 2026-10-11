@@ -1,6 +1,5 @@
 import type { Task } from "./task";
 
-export type TaskFormValues = Pick<
-  Task,
-  "title" | "priority" | "description" | "assignee"
->;
+export type TaskFormValues = Pick<Task, "title" | "priority" | "assignee"> & {
+  description: string;
+};
