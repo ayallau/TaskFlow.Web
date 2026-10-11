@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Counter } from "./components/playground/Counter";
 import type { User } from "./types/user";
 import { TasksPage } from "./components/TasksPage";
+import { LoginForm } from "./components/LoginForm";
 
 const appName = "TaskFlow";
 
@@ -45,6 +46,9 @@ function App() {
       <Sidebar />
 
       <MainContent>
+        <Section title="Login Demo">
+          <LoginForm />
+        </Section>
         <Section title="Users">
           <button type="button" onClick={handlePromoteUser}>
             Promote User
