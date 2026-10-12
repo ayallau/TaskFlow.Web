@@ -60,7 +60,7 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
       <div>
         <label htmlFor="task-title">Title</label>
         <input
