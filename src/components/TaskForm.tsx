@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { TaskFormValues } from "../types/taskFormValues";
+import type { TaskFormValues, TaskFormErrors } from "../types/taskFormValues";
 import type { Task } from "../types/task";
 
 type TaskFormProps = {
@@ -13,15 +13,37 @@ const initialValues: TaskFormValues = {
   assignee: "",
 };
 
+function validateTaskForm(values: TaskFormValues): TaskFormErrors {
+  const errors: TaskFormErrors = {};
+
+  if (!values.title.trim()) {
+    errors.title = "Title is required";
+  } else if (values.title.trim().length < 3) {
+    errors.title = "Title must be at least 3 characters long";
+  }
+
+  if (values.description.length > 500) {
+    errors.description = "Description must not exceed 500 characters";
+  }
+
+  if (!values.assignee.trim()) {
+    errors.assignee = "Assignee is required";
+  }
+
+  return errors;
+}
+
 export function TaskForm({ onAddTask }: TaskFormProps) {
   const [form, setForm] = useState<TaskFormValues>(initialValues);
+  const [errors, setErrors] = useState<TaskFormErrors>({});
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const trimmedTitle = form.title.trim();
+    const validationErrors = validateTaskForm(form);
+    setErrors(validationErrors);
 
-    if (!trimmedTitle) {
+    if (Object.keys(validationErrors).length > 0) {
       return;
     }
 
@@ -29,7 +51,8 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
       id: Date.now(),
       status: "open",
       ...form,
-      title: trimmedTitle,
+      title: form.title.trim(),
+      assignee: form.assignee.trim(),
     };
 
     onAddTask(newTask);
@@ -43,12 +66,18 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
         <input
           type="text"
           id="task-title"
-          required
           value={form.title}
           onChange={(event) =>
             setForm({ ...form, title: event.currentTarget.value })
           }
+          aria-invalid={Boolean(errors.title)}
+          aria-describedby={errors.title ? "task-title-error" : undefined}
         />
+        {errors.title && (
+          <p id="task-title-error" role="alert">
+            {errors.title}
+          </p>
+        )}
       </div>
 
       <div>
@@ -59,7 +88,16 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
           onChange={(event) =>
             setForm({ ...form, description: event.currentTarget.value })
           }
+          aria-invalid={Boolean(errors.description)}
+          aria-describedby={
+            errors.description ? "task-description-error" : undefined
+          }
         />
+        {errors.description && (
+          <p id="task-description-error" role="alert">
+            {errors.description}
+          </p>
+        )}
       </div>
 
       <div>
@@ -89,7 +127,14 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
           onChange={(event) =>
             setForm({ ...form, assignee: event.currentTarget.value })
           }
+          aria-invalid={Boolean(errors.assignee)}
+          aria-describedby={errors.assignee ? "task-assignee-error" : undefined}
         />
+        {errors.assignee && (
+          <p id="task-assignee-error" role="alert">
+            {errors.assignee}
+          </p>
+        )}
       </div>
 
       <button type="submit">Create Task</button>
