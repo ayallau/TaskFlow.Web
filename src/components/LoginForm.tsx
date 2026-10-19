@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { SubmitEvent } from "react";
+import type { LoginFormValues } from "../types/loginFormValues";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -7,8 +8,15 @@ export function LoginForm() {
 
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("Email:", email);
+    const values: LoginFormValues = {
+      email,
+      password,
+    };
+
+    console.log("Email:", values.email);
     console.log("Password:", "***");
+
+    
   }
 
   return (
