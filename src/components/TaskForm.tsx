@@ -61,8 +61,6 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
   const showDescriptionError =
     (touched.description || submitAttempted) &&
     Boolean(currentErrors.description);
-  const showPriorityError =
-    (touched.priority || submitAttempted) && Boolean(currentErrors.priority);
 
   //==================== Handlers ====================//
 
@@ -85,6 +83,8 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
 
     onAddTask(newTask);
     setForm(initialValues);
+    setTouched(initialTouched);
+    setSubmitAttempted(false);
   }
 
   function handleBlur(field: keyof TaskFormTouched) {
