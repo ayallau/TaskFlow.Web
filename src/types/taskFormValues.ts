@@ -5,3 +5,5 @@ export type TaskFormValues = Pick<Task, "title" | "priority" | "assignee"> & {
 };
 
 export type TaskFormErrors = Partial<Record<keyof TaskFormValues, string>>;
+
+export type TaskFormTouched = Record<keyof TaskFormValues, boolean>;

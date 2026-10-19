@@ -1,5 +1,9 @@
 import { useState } from "react";
-import type { TaskFormValues, TaskFormErrors } from "../types/taskFormValues";
+import type {
+  TaskFormValues,
+  TaskFormErrors,
+  TaskFormTouched,
+} from "../types/taskFormValues";
 import type { Task } from "../types/task";
 
 type TaskFormProps = {
@@ -12,6 +16,15 @@ const initialValues: TaskFormValues = {
   priority: "medium",
   assignee: "",
 };
+
+const initialTouched: TaskFormTouched = {
+  title: false,
+  description: false,
+  priority: false,
+  assignee: false,
+};
+
+//==================== Validation ====================//
 
 function validateTaskForm(values: TaskFormValues): TaskFormErrors {
   const errors: TaskFormErrors = {};
@@ -33,16 +46,31 @@ function validateTaskForm(values: TaskFormValues): TaskFormErrors {
   return errors;
 }
 
+//==================== Task Form ====================//
+
 export function TaskForm({ onAddTask }: TaskFormProps) {
   const [form, setForm] = useState<TaskFormValues>(initialValues);
-  const [errors, setErrors] = useState<TaskFormErrors>({});
+  const [touched, setTouched] = useState<TaskFormTouched>(initialTouched);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+
+  const currentErrors = validateTaskForm(form);
+  const showTitleError =
+    (touched.title || submitAttempted) && Boolean(currentErrors.title);
+  const showAssigneeError =
+    (touched.assignee || submitAttempted) && Boolean(currentErrors.assignee);
+  const showDescriptionError =
+    (touched.description || submitAttempted) &&
+    Boolean(currentErrors.description);
+  const showPriorityError =
+    (touched.priority || submitAttempted) && Boolean(currentErrors.priority);
+
+  //==================== Handlers ====================//
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSubmitAttempted(true);
 
     const validationErrors = validateTaskForm(form);
-    setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length > 0) {
       return;
     }
@@ -59,6 +87,15 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
     setForm(initialValues);
   }
 
+  function handleBlur(field: keyof TaskFormTouched) {
+    setTouched((prev) => ({
+      ...prev,
+      [field]: true,
+    }));
+  }
+
+  //======================= Render ====================//
+
   return (
     <form onSubmit={handleSubmit} noValidate>
       <div>
@@ -70,12 +107,13 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
           onChange={(event) =>
             setForm({ ...form, title: event.currentTarget.value })
           }
-          aria-invalid={Boolean(errors.title)}
-          aria-describedby={errors.title ? "task-title-error" : undefined}
+          onBlur={() => handleBlur("title")}
+          aria-invalid={showTitleError}
+          aria-describedby={showTitleError ? "task-title-error" : undefined}
         />
-        {errors.title && (
+        {showTitleError && (
           <p id="task-title-error" role="alert">
-            {errors.title}
+            {currentErrors.title}
           </p>
         )}
       </div>
@@ -88,14 +126,14 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
           onChange={(event) =>
             setForm({ ...form, description: event.currentTarget.value })
           }
-          aria-invalid={Boolean(errors.description)}
+          aria-invalid={showDescriptionError}
           aria-describedby={
-            errors.description ? "task-description-error" : undefined
+            showDescriptionError ? "task-description-error" : undefined
           }
         />
-        {errors.description && (
+        {showDescriptionError && (
           <p id="task-description-error" role="alert">
-            {errors.description}
+            {currentErrors.description}
           </p>
         )}
       </div>
@@ -127,12 +165,14 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
           onChange={(event) =>
             setForm({ ...form, assignee: event.currentTarget.value })
           }
-          aria-invalid={Boolean(errors.assignee)}
-          aria-describedby={errors.assignee ? "task-assignee-error" : undefined}
+          aria-invalid={showAssigneeError}
+          aria-describedby={
+            showAssigneeError ? "task-assignee-error" : undefined
+          }
         />
-        {errors.assignee && (
+        {showAssigneeError && (
           <p id="task-assignee-error" role="alert">
-            {errors.assignee}
+            {currentErrors.assignee}
           </p>
         )}
       </div>
