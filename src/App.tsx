@@ -10,6 +10,7 @@ import { Counter } from "./components/playground/Counter";
 import type { User } from "./types/user";
 import { TasksPage } from "./components/TasksPage";
 import { LoginForm } from "./components/LoginForm";
+import { StrictModeDemo } from "./components/playground/StrictModeDemoWithUseEffect";
 
 const appName = "TaskFlow";
 
@@ -77,6 +78,7 @@ function App() {
         {isPlaygroundOpen && (
           <Section title="Exercises">
             <Counter />
+            <StrictModeDemo />
           </Section>
         )}
       </MainContent>
