@@ -24,7 +24,7 @@ const initialTouched: TaskFormTouched = {
   assignee: false,
 };
 
-//==================== Validation ====================//
+//==================== Validation
 
 function validateTaskForm(values: TaskFormValues): TaskFormErrors {
   const errors: TaskFormErrors = {};
@@ -46,7 +46,7 @@ function validateTaskForm(values: TaskFormValues): TaskFormErrors {
   return errors;
 }
 
-//==================== Task Form ====================//
+//==================== Task Form
 
 export function TaskForm({ onAddTask }: TaskFormProps) {
   const [form, setForm] = useState<TaskFormValues>(initialValues);
@@ -62,7 +62,7 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
     (touched.description || submitAttempted) &&
     Boolean(currentErrors.description);
 
-  //==================== Handlers ====================//
+  //==================== Task Form > Handlers
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -94,7 +94,7 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
     }));
   }
 
-  //======================= Render ====================//
+  //==================== Render
 
   return (
     <form onSubmit={handleSubmit} noValidate>
