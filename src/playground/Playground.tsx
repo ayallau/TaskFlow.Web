@@ -3,6 +3,7 @@ import { EffectCleanupExample } from "./examples/EffectCleanupExample";
 import { ClosureCounterExample } from "./examples/ClosureCounterExample";
 import { StrictModeDemo } from "./examples/StrictModeDemoWithUseEffect";
 import "./Playground.css";
+import { InfiniteEffectLoopExample } from "./examples/InfiniteEffectLoopExample";
 
 export function Playground() {
   const [showStrictModeDemo, setShowStrictModeDemo] = useState(false);
@@ -10,6 +11,8 @@ export function Playground() {
 
   const [intervalInput, setIntervalInput] = useState(1000);
   const [intervalMs, setIntervalMs] = useState(1000);
+
+  const [showInfiniteEffectDemo, setShowInfiniteEffectDemo] = useState(false);
 
   function handleRunCounter() {
     ClosureCounterExample();
@@ -120,6 +123,31 @@ export function Playground() {
         </p>
 
         {showEffectDemo && <EffectCleanupExample intervalMs={intervalMs} />}
+      </section>
+
+      <section className="playground-card">
+        <div className="playground-card-heading">
+          <div>
+            <h2>Infinite Effect Loop</h2>
+            <p>
+              Demonstrates an effect that repeatedly updates its own dependency.
+              A safety limit stops the loop after five updates.
+            </p>
+          </div>
+
+          <span className="playground-tag">React</span>
+        </div>
+
+        <div className="playground-controls">
+          <button
+            type="button"
+            onClick={() => setShowInfiniteEffectDemo((prev) => !prev)}
+          >
+            {showInfiniteEffectDemo ? "Stop Loop" : "Start Loop"}
+          </button>
+        </div>
+
+        {showInfiniteEffectDemo && <InfiniteEffectLoopExample />}
       </section>
 
       <footer className="playground-footer">
