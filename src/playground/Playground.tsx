@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ClosureEffectCleanupExample } from "./examples/ClosureEffectCleanupExample";
+import { EffectCleanupExample } from "./examples/EffectCleanupExample";
 import { ClosureCounterExample } from "./examples/ClosureCounterExample";
 import { StrictModeDemo } from "./examples/StrictModeDemoWithUseEffect";
 import "./Playground.css";
@@ -15,8 +15,13 @@ export function Playground() {
     ClosureCounterExample();
   }
 
+  const isValidInterval =
+    Number.isFinite(intervalInput) &&
+    intervalInput >= 100 &&
+    intervalInput <= 10000;
+
   function handleUpdateInterval() {
-    if (!Number.isFinite(intervalInput) || intervalInput < 100) {
+    if (!isValidInterval) {
       return;
     }
 
@@ -96,12 +101,7 @@ export function Playground() {
           <button
             type="button"
             onClick={handleUpdateInterval}
-            disabled={
-              !Number.isFinite(intervalInput) ||
-              intervalInput < 100 ||
-              intervalInput > 10000 ||
-              intervalInput === intervalMs
-            }
+            disabled={!isValidInterval || intervalInput === intervalMs}
           >
             Update Interval
           </button>
@@ -119,9 +119,7 @@ export function Playground() {
           Active interval: <strong>{intervalMs} ms</strong>
         </p>
 
-        {showEffectDemo && (
-          <ClosureEffectCleanupExample intervalMs={intervalMs} />
-        )}
+        {showEffectDemo && <EffectCleanupExample intervalMs={intervalMs} />}
       </section>
 
       <footer className="playground-footer">

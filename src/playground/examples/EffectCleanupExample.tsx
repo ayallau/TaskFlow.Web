@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
-export function ClosureEffectCleanupExample({
-  intervalMs,
-}: {
-  intervalMs: number;
-}) {
+export function EffectCleanupExample({ intervalMs }: { intervalMs: number }) {
   useEffect(() => {
     console.log("Setup:", intervalMs);
 
