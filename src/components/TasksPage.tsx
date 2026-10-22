@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Task } from "../types/task";
 import { Section } from "./shared/Section";
 import { TaskForm } from "./TaskForm";
@@ -28,6 +28,8 @@ export function TasksPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
+  const openTasksCount = tasks.filter((task) => task.status === "open").length;
+
   function handleAddTask(task: Task) {
     setTasks((prevTasks) => [...prevTasks, task]);
   }
@@ -48,6 +50,11 @@ export function TasksPage() {
       ),
     );
   }
+
+  useEffect(() => {
+    const label = openTasksCount === 1 ? "open task" : "open tasks";
+    document.title = `TaskFlow (${openTasksCount} ${label})`;
+  }, [openTasksCount]);
 
   return (
     <Section title="Tasks">
