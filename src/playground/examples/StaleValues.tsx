@@ -11,7 +11,7 @@ export function StaleCounter() {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [count]);
 
   return <p>Count: {count}</p>;
 }
