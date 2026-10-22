@@ -4,6 +4,7 @@ import { ClosureCounterExample } from "./examples/ClosureCounterExample";
 import { StrictModeDemo } from "./examples/StrictModeDemoWithUseEffect";
 import "./Playground.css";
 import { InfiniteEffectLoopExample } from "./examples/InfiniteEffectLoopExample";
+import { StaleCounter } from "./examples/StaleValues";
 
 export function Playground() {
   const [showStrictModeDemo, setShowStrictModeDemo] = useState(false);
@@ -13,6 +14,8 @@ export function Playground() {
   const [intervalMs, setIntervalMs] = useState(1000);
 
   const [showInfiniteEffectDemo, setShowInfiniteEffectDemo] = useState(false);
+
+  const [showStaleCounter, setShowStaleCounter] = useState(false);
 
   function handleRunCounter() {
     ClosureCounterExample();
@@ -148,6 +151,28 @@ export function Playground() {
         </div>
 
         {showInfiniteEffectDemo && <InfiniteEffectLoopExample />}
+      </section>
+
+      <section className="playground-card">
+        <div className="playground-card-heading">
+          <div>
+            <h2>Stale Counter</h2>
+            <p>Demonstrates stale values in a closure.</p>
+          </div>
+
+          <span className="playground-tag">React</span>
+        </div>
+
+        <div className="playground-controls">
+          <button
+            type="button"
+            onClick={() => setShowStaleCounter((prev) => !prev)}
+          >
+            {showStaleCounter ? "Stop Counter" : "Start Counter"}
+          </button>
+        </div>
+
+        {showStaleCounter && <StaleCounter />}
       </section>
 
       <footer className="playground-footer">
