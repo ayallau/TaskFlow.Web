@@ -5,6 +5,7 @@ import { StrictModeDemo } from "./examples/StrictModeDemoWithUseEffect";
 import "./Playground.css";
 import { InfiniteEffectLoopExample } from "./examples/InfiniteEffectLoopExample";
 import { StaleCounter } from "./examples/StaleValues";
+import { DerivedValueExample } from "./examples/DerivedValueExample";
 
 export function Playground() {
   const [showStrictModeDemo, setShowStrictModeDemo] = useState(false);
@@ -173,6 +174,22 @@ export function Playground() {
         </div>
 
         {showStaleCounter && <StaleCounter />}
+      </section>
+
+      <section className="playground-card">
+        <div className="playground-card-heading">
+          <div>
+            <h2>Derived Value</h2>
+            <p>
+              Demonstrates calculating derived values directly from state
+              without redundant effects or additional state.
+            </p>
+          </div>
+
+          <span className="playground-tag">React</span>
+        </div>
+
+        <DerivedValueExample />
       </section>
 
       <footer className="playground-footer">
