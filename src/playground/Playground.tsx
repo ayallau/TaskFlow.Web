@@ -6,18 +6,12 @@ import "./Playground.css";
 import { InfiniteEffectLoopExample } from "./examples/InfiniteEffectLoopExample";
 import { StaleCounter } from "./examples/StaleValues";
 import { DerivedValueExample } from "./examples/DerivedValueExample";
+import { PlaygroundCard } from "./PlaygroundCard";
 
 export function Playground() {
-  const [showStrictModeDemo, setShowStrictModeDemo] = useState(false);
   const [showEffectDemo, setShowEffectDemo] = useState(false);
-
   const [intervalInput, setIntervalInput] = useState(1000);
   const [intervalMs, setIntervalMs] = useState(1000);
-
-  const [showInfiniteEffectDemo, setShowInfiniteEffectDemo] = useState(false);
-
-  const [showStaleCounter, setShowStaleCounter] = useState(false);
-
   function handleRunCounter() {
     ClosureCounterExample();
   }
@@ -44,26 +38,6 @@ export function Playground() {
           console output.
         </p>
       </header>
-
-      <section className="playground-card">
-        <div className="playground-card-heading">
-          <div>
-            <h2>StrictMode Demo</h2>
-            <p>Inspect effect setup, cleanup and timer behavior.</p>
-          </div>
-
-          <span className="playground-tag">React</span>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setShowStrictModeDemo((prev) => !prev)}
-        >
-          {showStrictModeDemo ? "Stop Demo" : "Run Demo"}
-        </button>
-
-        {showStrictModeDemo && <StrictModeDemo />}
-      </section>
 
       <section className="playground-card">
         <div className="playground-card-heading">
@@ -132,53 +106,6 @@ export function Playground() {
       <section className="playground-card">
         <div className="playground-card-heading">
           <div>
-            <h2>Infinite Effect Loop</h2>
-            <p>
-              Demonstrates an effect that repeatedly updates its own dependency.
-              A safety limit stops the loop after five updates.
-            </p>
-          </div>
-
-          <span className="playground-tag">React</span>
-        </div>
-
-        <div className="playground-controls">
-          <button
-            type="button"
-            onClick={() => setShowInfiniteEffectDemo((prev) => !prev)}
-          >
-            {showInfiniteEffectDemo ? "Stop Loop" : "Start Loop"}
-          </button>
-        </div>
-
-        {showInfiniteEffectDemo && <InfiniteEffectLoopExample />}
-      </section>
-
-      <section className="playground-card">
-        <div className="playground-card-heading">
-          <div>
-            <h2>Stale Counter</h2>
-            <p>Demonstrates stale values in a closure.</p>
-          </div>
-
-          <span className="playground-tag">React</span>
-        </div>
-
-        <div className="playground-controls">
-          <button
-            type="button"
-            onClick={() => setShowStaleCounter((prev) => !prev)}
-          >
-            {showStaleCounter ? "Stop Counter" : "Start Counter"}
-          </button>
-        </div>
-
-        {showStaleCounter && <StaleCounter />}
-      </section>
-
-      <section className="playground-card">
-        <div className="playground-card-heading">
-          <div>
             <h2>Derived Value</h2>
             <p>
               Demonstrates calculating derived values directly from state
@@ -191,6 +118,33 @@ export function Playground() {
 
         <DerivedValueExample />
       </section>
+
+      <PlaygroundCard
+        title="StrictMode Demo"
+        description="Inspect effect setup, cleanup and timer behavior."
+        startLabel="Run Demo"
+        stopLabel="Stop Demo"
+      >
+        <StrictModeDemo />
+      </PlaygroundCard>
+
+      <PlaygroundCard
+        title="Infinite Effect Loop"
+        description="Demonstrates an effect that repeatedly updates its own dependency."
+        startLabel="Start Loop"
+        stopLabel="Stop Loop"
+      >
+        <InfiniteEffectLoopExample />
+      </PlaygroundCard>
+
+      <PlaygroundCard
+        title="Stale Counter"
+        description="Demonstrates stale values in a closure."
+        startLabel="Start Counter"
+        stopLabel="Stop Counter"
+      >
+        <StaleCounter />
+      </PlaygroundCard>
 
       <footer className="playground-footer">
         Console output only — experiments are isolated from TaskFlow.
