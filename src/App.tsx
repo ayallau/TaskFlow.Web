@@ -5,7 +5,7 @@ import { Sidebar } from "./components/layout/Sidebar";
 import { Card } from "./components/shared/Card";
 import { Section } from "./components/shared/Section";
 import { UserCard } from "./components/UserCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Counter } from "./components/playground/Counter";
 import type { User } from "./types/user";
 import { TasksPage } from "./components/TasksPage";
@@ -32,6 +32,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState(users[0]);
   const [isPlaygroundOpen, setIsPlaygroundOpen] = useState(false);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
+    const storedValue = localStorage.getItem("taskflow.sidebarOpen");
+
+    return storedValue === null ? true : storedValue === "true";
+  }); //Lazy initializer
+
   function handlePromoteUser() {
     setCurrentUser((prevUser) => ({
       ...prevUser,
@@ -39,11 +45,24 @@ function App() {
     }));
   }
 
+  useEffect(() => {
+    localStorage.setItem("taskflow.sidebarOpen", isSidebarOpen.toString());
+  }, [isSidebarOpen]);
+
   return (
     <>
       <Header title={appName} />
 
-      <Sidebar />
+      <button
+        type="button"
+        onClick={() => setIsSidebarOpen((prev) => !prev)}
+        aria-expanded={isSidebarOpen}
+        aria-controls="app-sidebar"
+      >
+        {isSidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+      </button>
+
+      {isSidebarOpen && <Sidebar />}
 
       <MainContent>
         <Section title="Login Demo">

@@ -1,6 +1,6 @@
 export function Sidebar() {
   return (
-    <aside>
+    <aside id="app-sidebar">
       <nav>
         <ul>
           <li>Dashboard</li>
