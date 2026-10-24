@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PlaygroundCard } from "./PlaygroundCard";
 import { EffectCleanupExample } from "./examples/EffectCleanupExample";
 import { ClosureCounterExample } from "./examples/ClosureCounterExample";
 import { StrictModeDemo } from "./examples/StrictModeDemoWithUseEffect";
@@ -6,7 +7,7 @@ import "./Playground.css";
 import { InfiniteEffectLoopExample } from "./examples/InfiniteEffectLoopExample";
 import { StaleCounter } from "./examples/StaleValues";
 import { DerivedValueExample } from "./examples/DerivedValueExample";
-import { PlaygroundCard } from "./PlaygroundCard";
+import { TaskTimerExample } from "./examples/TaskTimerExample";
 
 export function Playground() {
   const [showEffectDemo, setShowEffectDemo] = useState(false);
@@ -144,6 +145,16 @@ export function Playground() {
         stopLabel="Stop Counter"
       >
         <StaleCounter />
+      </PlaygroundCard>
+
+      <PlaygroundCard
+        title="Task Timer"
+        description="Demonstrates interval setup, cleanup, and functional state updates."
+        startLabel="Start Timer"
+        stopLabel="Stop Timer"
+        toggleable={false}
+      >
+        <TaskTimerExample />
       </PlaygroundCard>
 
       <footer className="playground-footer">
