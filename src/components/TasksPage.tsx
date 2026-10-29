@@ -76,13 +76,15 @@ export function TasksPage() {
 
   return (
     <Section title="Tasks">
-      <TaskSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-
       <Section title="Add Task">
         <TaskForm onAddTask={handleAddTask} />
       </Section>
 
-      <Section title="Current Tasks">
+      <Section title="Search Task">
+        <TaskSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      </Section>
+
+      <Section title={`Task List (${openTasksCount})`}>
         <TaskList
           tasks={tasks}
           searchTerm={searchTerm}
