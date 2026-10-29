@@ -4,8 +4,7 @@ import { Section } from "./shared/Section";
 import { TaskForm } from "./TaskForm";
 import { TaskList } from "./TaskList";
 import { TaskSearch } from "./TaskSearch";
-import type { TaskDto } from "../types/taskDto";
-import { mapTaskDtoToTask } from "../mappers/taskMapper";
+import { getTasks } from "../services/tasksService";
 
 export function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -21,16 +20,7 @@ export function TasksPage() {
 
     async function loadTasks() {
       try {
-        const response = await fetch("/api/tasks.json", {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        const dtos: TaskDto[] = await response.json();
-        const data: Task[] = dtos.map(mapTaskDtoToTask);
+        const data = await getTasks(controller.signal);
 
         if (!controller.signal.aborted) {
           setTasks(data);
