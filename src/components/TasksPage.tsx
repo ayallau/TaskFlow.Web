@@ -5,33 +5,44 @@ import { TaskForm } from "./TaskForm";
 import { TaskList } from "./TaskList";
 import { TaskSearch } from "./TaskSearch";
 
-const initialTasks: Task[] = [
-  {
-    id: 1,
-    title: "Learn Props",
-    status: "open",
-    priority: "high",
-    assignee: "Ayal",
-    description: "User should know how to use props",
-  },
-  {
-    id: 2,
-    title: "Build UserCard",
-    status: "done",
-    priority: "medium",
-    assignee: "Dana",
-    description: "Build a user card component",
-  },
-];
-
 export function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const openTasksCount = tasks.filter((task) => task.status === "open").length;
 
   const [searchTerm, setSearchTerm] = useState(() => {
     return sessionStorage.getItem("taskflow.searchTerm") ?? "";
   });
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadTasks() {
+      try {
+        const response = await fetch("/api/tasks.json", {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const data: Task[] = await response.json();
+
+        if (!controller.signal.aborted) {
+          setTasks(data);
+        }
+      } catch (error) {
+        if (controller.signal.aborted) return;
+
+        console.error("Failed to load tasks:", error);
+      }
+    }
+
+    void loadTasks();
+
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     sessionStorage.setItem("taskflow.searchTerm", searchTerm);
