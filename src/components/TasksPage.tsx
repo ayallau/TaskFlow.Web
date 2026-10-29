@@ -6,6 +6,8 @@ import { TaskList } from "./TaskList";
 import { TaskSearch } from "./TaskSearch";
 import { getTasks } from "../services/tasksService";
 
+type LoadStatus = "idle" | "loading" | "success" | "error";
+
 export function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -15,27 +17,42 @@ export function TasksPage() {
     return sessionStorage.getItem("taskflow.searchTerm") ?? "";
   });
 
+  const [loadStatus, setLoadStatus] = useState<LoadStatus>("idle");
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  function handleRefresh() {
+    setRefreshKey((prev) => prev + 1);
+  }
+
   useEffect(() => {
     const controller = new AbortController();
 
     async function loadTasks() {
+      setLoadStatus("loading");
+      setLoadError(null);
+
       try {
         const data = await getTasks(controller.signal);
 
-        if (!controller.signal.aborted) {
-          setTasks(data);
-        }
+        if (controller.signal.aborted) return;
+
+        setTasks(data);
+        setLoadStatus("success");
       } catch (error) {
         if (controller.signal.aborted) return;
 
-        console.error("Failed to load tasks:", error);
+        setLoadError(
+          error instanceof Error ? error.message : "Failed to load tasks",
+        );
+        setLoadStatus("error");
       }
     }
 
     void loadTasks();
 
     return () => controller.abort();
-  }, []);
+  }, [refreshKey]);
 
   useEffect(() => {
     sessionStorage.setItem("taskflow.searchTerm", searchTerm);
@@ -78,12 +95,32 @@ export function TasksPage() {
       </Section>
 
       <Section title={`Task List (${openTasksCount})`}>
-        <TaskList
-          tasks={tasks}
-          searchTerm={searchTerm}
-          onDelete={handleDeleteTask}
-          onToggleStatus={handleToggleStatus}
-        />
+        <button
+          type="button"
+          onClick={handleRefresh}
+          disabled={loadStatus === "loading"}
+        >
+          Refresh Tasks
+        </button>
+
+        {loadStatus === "loading" && <p role="status">Loading tasks...</p>}
+
+        {loadStatus === "error" && (
+          <p role="alert">Failed to load tasks: {loadError}</p>
+        )}
+
+        {loadStatus === "success" && tasks.length === 0 && (
+          <p>No tasks available.</p>
+        )}
+
+        {loadStatus === "success" && tasks.length > 0 && (
+          <TaskList
+            tasks={tasks}
+            searchTerm={searchTerm}
+            onDelete={handleDeleteTask}
+            onToggleStatus={handleToggleStatus}
+          />
+        )}
       </Section>
     </Section>
   );
