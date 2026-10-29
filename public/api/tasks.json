@@ -2,25 +2,25 @@
   {
     "id": 1,
     "title": "Learn Props",
-    "status": "open",
-    "priority": "high",
-    "assignee": "Ayal",
+    "completed": false,
+    "priority": "HIGH",
+    "assigned_to": "Ayal",
     "description": "User should know how to use props"
   },
   {
     "id": 2,
     "title": "Build UserCard",
-    "status": "done",
-    "priority": "medium",
-    "assignee": "Dana",
+    "completed": true,
+    "priority": "MEDIUM",
+    "assigned_to": "Dana",
     "description": "Build a user card component"
   },
   {
     "id": 3,
     "title": "Integrate Mock API",
-    "status": "open",
-    "priority": "high",
-    "assignee": "Ayal",
+    "completed": false,
+    "priority": "HIGH",
+    "assigned_to": "Ayal",
     "description": "Load tasks asynchronously from a mock API"
   }
 ]
