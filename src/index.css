@@ -5,3 +5,21 @@
 body {
   margin: 0;
 }
+
+.nav-link {
+  display: block;
+  padding: 8px 12px;
+  color: #374151;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background-color: #f3f4f6;
+}
+
+.nav-link.active {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 600;
+}
