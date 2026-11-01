@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  appType: "spa",
   server: {
     port: 5173,
     strictPort: true,
