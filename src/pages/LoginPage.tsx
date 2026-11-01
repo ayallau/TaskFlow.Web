@@ -1,8 +1,10 @@
+import { LoginForm } from "../components/LoginForm";
+import { Section } from "../components/shared/Section";
+
 export function LoginPage() {
   return (
-    <section>
-      <h2>Login</h2>
-      <p>Login page</p>
-    </section>
+    <Section title="Login">
+      <LoginForm />
+    </Section>
   );
 }
