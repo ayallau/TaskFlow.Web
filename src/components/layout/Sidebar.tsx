@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import { routePaths } from "../../routes/routePaths";
 
 export function Sidebar() {
   return (
@@ -7,7 +8,7 @@ export function Sidebar() {
         <ul>
           <li>
             <NavLink
-              to="/"
+              to={routePaths.dashboard}
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
@@ -19,7 +20,7 @@ export function Sidebar() {
 
           <li>
             <NavLink
-              to="/tasks"
+              to={routePaths.tasks}
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
               }
@@ -30,7 +31,7 @@ export function Sidebar() {
 
           <li>
             <NavLink
-              to="/users"
+              to={routePaths.users}
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
               }
