@@ -1,5 +1,7 @@
 import type { Task } from "../types/task";
 import { Card } from "./shared/Card";
+import { Link } from "react-router";
+import { routePaths } from "../routes/routePaths";
 
 type TaskCardProps = Task & {
   onDelete: (taskId: number) => void;
@@ -22,6 +24,8 @@ export function TaskCard({
       <p>Priority: {priority}</p>
 
       {assignee && <p>Assignee: {assignee}</p>}
+
+      <Link to={`${routePaths.tasks}/${id}`}>View Details</Link>
 
       <button type="button" onClick={() => onToggleStatus(id)}>
         Toggle status

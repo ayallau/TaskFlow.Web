@@ -7,6 +7,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { AppLayout } from "../components/layout/AppLayout";
 import { routePaths } from "./routePaths";
+import { TaskDetailsPage } from "../pages/TaskDetailsPage";
 
 export function AppRoutes() {
   return (
@@ -14,6 +15,7 @@ export function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route path={routePaths.dashboard} element={<DashboardPage />} />
         <Route path={routePaths.tasks} element={<TasksPage />} />
+        <Route path={routePaths.taskDetails} element={<TaskDetailsPage />} />
         <Route path={routePaths.users} element={<UsersPage />} />
       </Route>
 
