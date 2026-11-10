@@ -8,34 +8,26 @@ export function TaskDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const taskId = Number(id);
 
-  const [task, setTask] = useState<Task | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const isValidId = !!id && Number.isSafeInteger(taskId) && taskId > 0;
 
   useEffect(() => {
-    if (!isValidId) return;
-
     const controller = new AbortController();
 
-    async function loadTask() {
-      setIsLoading(true);
-      setError(null);
-      setTask(null);
-
+    async function loadTasks() {
       try {
-        const tasks = await getTasks(controller.signal);
+        const data = await getTasks(controller.signal);
 
         if (controller.signal.aborted) return;
 
-        const foundTask = tasks.find((item) => item.id === taskId) ?? null;
-
-        setTask(foundTask);
+        setTasks(data);
       } catch (err) {
         if (controller.signal.aborted) return;
 
-        setError(err instanceof Error ? err.message : "Failed to load task");
+        setError(err instanceof Error ? err.message : "Failed to load tasks");
       } finally {
         if (!controller.signal.aborted) {
           setIsLoading(false);
@@ -43,10 +35,10 @@ export function TaskDetailsPage() {
       }
     }
 
-    void loadTask();
+    void loadTasks();
 
     return () => controller.abort();
-  }, [taskId, isValidId]);
+  }, []);
 
   if (!isValidId) {
     return <p>Invalid task ID.</p>;
@@ -60,9 +52,16 @@ export function TaskDetailsPage() {
     return <p role="alert">{error}</p>;
   }
 
-  if (!task) {
+  const currentIndex = tasks.findIndex((item) => item.id === taskId);
+
+  if (currentIndex === -1) {
     return <p>Task not found.</p>;
   }
+
+  const task = tasks[currentIndex];
+
+  const previousTask = tasks[currentIndex - 1];
+  const nextTask = tasks[currentIndex + 1];
 
   return (
     <article>
@@ -74,6 +73,26 @@ export function TaskDetailsPage() {
       {task.description && <p>{task.description}</p>}
 
       <Link to={routePaths.tasks}>Back to Tasks</Link>
+
+      <nav aria-label="Task navigation">
+        {previousTask ? (
+          <Link to={`${routePaths.tasks}/${previousTask.id}`}>
+            Previous Task |
+          </Link>
+        ) : (
+          <span>Previous Task |</span>
+        )}
+
+        <span>
+          ({currentIndex + 1} / {tasks.length})
+        </span>
+
+        {nextTask ? (
+          <Link to={`${routePaths.tasks}/${nextTask.id}`}>| Next Task</Link>
+        ) : (
+          <span>| Next Task</span>
+        )}
+      </nav>
     </article>
   );
 }
