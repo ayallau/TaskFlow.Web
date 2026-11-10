@@ -1,0 +1,38 @@
+  {
+    "key": "shift+alt+b",
+    "command": "workbench.action.tasks.runTask",
+    "args": "npm: build",
+  },
+  {
+    "key": "shift+alt+p",
+    "command": "workbench.action.tasks.runTask",
+    "args": "npm: preview",
+  },
+    {
+    "key": "alt+b",
+    "command": "workbench.action.tasks.runTask",
+    "args": "build + preview",
+  },
+  {
+    "key": "alt+d",
+    "command": "workbench.action.tasks.runTask",
+    "args": "npm: dev",
+  },
+  {
+    "key": "alt+q",
+    "command": "workbench.action.tasks.runTask",
+    "args": "git: diff --staged > .user_files",
+  },
+  {
+    "key": "alt+i",
+    "command": "github.copilot.chat.completions.toggle"
+  },
+  {
+    "key": "alt+e",
+    "command": "errorLens.toggle"
+  }
+  {
+    "key": "alt+n",
+    "command": "workbench.action.tasks.runTask",
+    "args": "npm: check",
+  }
