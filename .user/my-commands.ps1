@@ -34,7 +34,7 @@ git diff --staged > .user_files(TaskFlow)/diff.patch
 
 git log --oneline -10
 
-# 
+# Show the changes made in a specific commit
 
 git show <commit-hash>
 
