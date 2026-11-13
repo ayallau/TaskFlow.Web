@@ -3,6 +3,7 @@ export const routePaths = {
   tasks: "/tasks",
   taskDetails: "/tasks/:id",
   users: "/users",
+  userDetails: "/users/:id",
   about: "/about",
   login: "/login",
 } as const;

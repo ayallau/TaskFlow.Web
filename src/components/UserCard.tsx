@@ -1,7 +1,6 @@
-// UserCard responsibility:
-// This component is responsible for displaying a single user's relevant information, such as name, role, and status.
-
 import type { User } from "../types/user";
+import { Link } from "react-router";
+import { routePaths } from "../routes/routePaths";
 
 export function UserCard({ id, name, role, isActive }: User) {
   return (
@@ -10,6 +9,7 @@ export function UserCard({ id, name, role, isActive }: User) {
       <p>ID: {id}</p>
       <p>Role: {role}</p>
       <p>Status: {isActive ? "Active" : "Inactive"}</p>
+      <Link to={`${routePaths.users}/${id}`}>View Details</Link>
     </article>
   );
 }
