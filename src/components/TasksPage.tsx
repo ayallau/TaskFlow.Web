@@ -5,6 +5,7 @@ import { TaskForm } from "./TaskForm";
 import { TaskList } from "./TaskList";
 import { TaskSearch } from "./TaskSearch";
 import { getTasks } from "../services/tasksService";
+import { useSearchParams } from "react-router";
 
 type LoadStatus = "idle" | "loading" | "success" | "error";
 
@@ -13,9 +14,8 @@ export function TasksPage() {
 
   const openTasksCount = tasks.filter((task) => task.status === "open").length;
 
-  const [searchTerm, setSearchTerm] = useState(() => {
-    return sessionStorage.getItem("taskflow.searchTerm") ?? "";
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get("search") ?? "";
 
   const [loadStatus, setLoadStatus] = useState<LoadStatus>("idle");
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -23,6 +23,23 @@ export function TasksPage() {
 
   function handleRefresh() {
     setRefreshKey((prev) => prev + 1);
+  }
+
+  function handleSearchChange(value: string) {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+
+        if (value.trim()) {
+          next.set("search", value);
+        } else {
+          next.delete("search");
+        }
+
+        return next;
+      },
+      { replace: true },
+    );
   }
 
   useEffect(() => {
@@ -53,10 +70,6 @@ export function TasksPage() {
 
     return () => controller.abort();
   }, [refreshKey]);
-
-  useEffect(() => {
-    sessionStorage.setItem("taskflow.searchTerm", searchTerm);
-  }, [searchTerm]);
 
   useEffect(() => {
     const label = openTasksCount === 1 ? "open task" : "open tasks";
@@ -91,7 +104,10 @@ export function TasksPage() {
       </Section>
 
       <Section title="Search Task">
-        <TaskSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+        <TaskSearch
+          searchTerm={searchTerm}
+          onSearchChange={handleSearchChange}
+        />
       </Section>
 
       <Section title={`Task List (${openTasksCount})`}>
