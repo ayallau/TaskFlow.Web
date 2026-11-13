@@ -2,17 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "npm: dev",
-      "type": "npm",
-      "script": "dev",
-      "problemMatcher": [],
-      "presentation": {
-        "panel": "shared",
-        "reveal": "always",
-        "close": false
-      }
-    },
-    {
       "label": "npm: build",
       "type": "npm",
       "script": "build",
@@ -45,24 +34,6 @@
       }
     },
     {
-      "label": "git: diff --staged > .user_files",
-      "type": "shell",
-      "command": "(echo %date% %time% & git diff --staged) > .temp/diff.patch",
-      "problemMatcher": [],
-      "presentation": {
-        "panel": "shared",
-        "reveal": "always",
-        "close": false
-      }
-    },
-    {
-      "type": "npm",
-      "script": "archive",
-      "problemMatcher": [],
-      "label": "npm: archive",
-      "detail": "node scripts/run_git_archive.js"
-    },
-    {
       "type": "npm",
       "script": "lint",
       "problemMatcher": ["$eslint-compact"],
@@ -88,21 +59,6 @@
       "presentation": {
         "reveal": "always",
         "panel": "dedicated"
-      }
-    },
-    {
-      "label": "TaskFlow: Stop Vite",
-      "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-NoProfile",
-        "-Command",
-        "$connections = Get-NetTCPConnection -LocalPort 5173 -State Listen -ErrorAction SilentlyContinue; foreach ($connection in $connections) { $processId = $connection.OwningProcess; $process = Get-CimInstance Win32_Process -Filter \"ProcessId=$processId\"; if ($process.CommandLine -match 'vite') { Stop-Process -Id $processId -Force } }"
-      ],
-      "problemMatcher": [],
-      "presentation": {
-        "reveal": "silent",
-        "close": true
       }
     }
   ]
