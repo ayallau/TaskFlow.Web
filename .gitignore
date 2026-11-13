@@ -45,7 +45,7 @@ lerna-debug.log*
 # IDEs, Editors, and OS-Specific Files
 # ####################################################################
 # Visual Studio Code
-.vscode/*
+#.vscode/*
 
 # WebStorm / JetBrains
 .idea/

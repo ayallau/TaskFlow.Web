@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "TaskFlow: Debug Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "TaskFlow: Start & Debug",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "preLaunchTask": "TaskFlow: Start Vite",
+      "postDebugTask": "TaskFlow: Stop Vite",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "TaskFlow: Attach Chrome",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    }
+  ]
+}
