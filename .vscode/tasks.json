@@ -42,7 +42,7 @@
     {
       "label": "git: diff --staged",
       "type": "shell",
-      "command": "if not exist .temp mkdir .temp & (echo %date% %time% & git diff --staged) > .temp/diff.patch",
+      "command": "(if not exist .temp mkdir .temp) && (echo %date% %time% & git diff --staged) > .temp/diff.patch",
       "problemMatcher": [],
       "presentation": {
         "panel": "new",
