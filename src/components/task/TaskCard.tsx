@@ -1,7 +1,7 @@
-import type { Task } from "../types/task";
-import { Card } from "./shared/Card";
+import type { Task } from "../../types/task";
+import { Card } from "../shared/Card";
 import { Link } from "react-router";
-import { routePaths } from "../routes/routePaths";
+import { routePaths } from "../../routes/routePaths";
 
 type TaskCardProps = Task & {
   onDelete: (taskId: number) => void;

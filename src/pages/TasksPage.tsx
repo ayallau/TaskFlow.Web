@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Task } from "../types/task";
-import { Section } from "./shared/Section";
-import { TaskForm } from "./TaskForm";
-import { TaskList } from "./TaskList";
-import { TaskSearch } from "./TaskSearch";
+import { Section } from "../components/shared/Section";
+import { TaskForm } from "../components/task/TaskForm";
+import { TaskList } from "../components/task/TaskList";
+import { TaskSearch } from "../components/task/TaskSearch";
 import { getTasks } from "../services/tasksService";
 import { useSearchParams } from "react-router";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserCard } from "../components/UserCard";
+import { UserCard } from "../components/user/UserCard";
 import { Card } from "../components/shared/Card";
 import { Section } from "../components/shared/Section";
 import { users } from "../data/users";

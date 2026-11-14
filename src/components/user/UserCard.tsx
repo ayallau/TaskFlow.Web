@@ -1,6 +1,6 @@
-import type { User } from "../types/user";
+import type { User } from "../../types/user";
 import { Link } from "react-router";
-import { routePaths } from "../routes/routePaths";
+import { routePaths } from "../../routes/routePaths";
 
 export function UserCard({ id, name, role, isActive }: User) {
   return (

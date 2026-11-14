@@ -3,8 +3,8 @@ import type {
   TaskFormValues,
   TaskFormErrors,
   TaskFormTouched,
-} from "../types/taskFormValues";
-import type { Task } from "../types/task";
+} from "../../types/taskFormValues";
+import type { Task } from "../../types/task";
 
 type TaskFormProps = {
   onAddTask: (newTask: Task) => void;
