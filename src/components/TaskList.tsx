@@ -3,36 +3,14 @@ import { TaskCard } from "./TaskCard";
 
 type TaskListProps = {
   tasks: Task[];
-  searchTerm: string;
-  status: string;
-  priority: string;
   onDelete: (taskId: number) => void;
   onToggleStatus: (taskId: number) => void;
 };
 
-export function TaskList({
-  tasks,
-  searchTerm,
-  status,
-  priority,
-  onDelete,
-  onToggleStatus,
-}: TaskListProps) {
-  const visibleTasks = tasks.filter((task) => {
-    const matchesSearch = task.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-
-    const matchesStatus = status === "all" || task.status === status;
-
-    const matchesPriority = priority === "all" || task.priority === priority;
-
-    return matchesSearch && matchesStatus && matchesPriority;
-  });
-
+export function TaskList({ tasks, onDelete, onToggleStatus }: TaskListProps) {
   return (
     <>
-      {visibleTasks.map((task) => (
+      {tasks.map((task) => (
         <TaskCard
           key={task.id}
           {...task}

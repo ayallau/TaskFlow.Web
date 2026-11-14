@@ -12,8 +12,6 @@ type LoadStatus = "idle" | "loading" | "success" | "error";
 export function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const openTasksCount = tasks.filter((task) => task.status === "open").length;
-
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get("search") ?? "";
 
@@ -89,6 +87,20 @@ export function TasksPage() {
     );
   }
 
+  const visibleTasks = tasks.filter((task) => {
+    const matchesSearch = task.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesStatus = status === "all" || task.status === status;
+
+    const matchesPriority = priority === "all" || task.priority === priority;
+
+    return matchesSearch && matchesStatus && matchesPriority;
+  });
+
+  const visibleTasksCount = visibleTasks.length;
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -119,9 +131,9 @@ export function TasksPage() {
   }, [refreshKey]);
 
   useEffect(() => {
-    const label = openTasksCount === 1 ? "open task" : "open tasks";
-    document.title = `TaskFlow (${openTasksCount} ${label})`;
-  }, [openTasksCount]);
+    const label = visibleTasksCount === 1 ? "task" : "tasks";
+    document.title = `TaskFlow (${visibleTasksCount} ${label})`;
+  }, [visibleTasksCount]);
 
   function handleAddTask(task: Task) {
     setTasks((prevTasks) => [...prevTasks, task]);
@@ -182,7 +194,7 @@ export function TasksPage() {
         </select>
       </Section>
 
-      <Section title={`Task List (${openTasksCount})`}>
+      <Section title={`Task List (${visibleTasksCount})`}>
         <button
           type="button"
           onClick={handleRefresh}
@@ -201,12 +213,13 @@ export function TasksPage() {
           <p>No tasks available.</p>
         )}
 
+        {loadStatus === "success" &&
+          tasks.length > 0 &&
+          visibleTasksCount === 0 && <p>No tasks match the current filters.</p>}
+
         {loadStatus === "success" && tasks.length > 0 && (
           <TaskList
-            tasks={tasks}
-            searchTerm={searchTerm}
-            status={status}
-            priority={priority}
+            tasks={visibleTasks}
             onDelete={handleDeleteTask}
             onToggleStatus={handleToggleStatus}
           />
