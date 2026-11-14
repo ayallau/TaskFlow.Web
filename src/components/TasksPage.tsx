@@ -17,6 +17,19 @@ export function TasksPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get("search") ?? "";
 
+  const statusParam = searchParams.get("status");
+  const priorityParam = searchParams.get("priority");
+
+  const status =
+    statusParam === "open" || statusParam === "done" ? statusParam : "all";
+
+  const priority =
+    priorityParam === "low" ||
+    priorityParam === "medium" ||
+    priorityParam === "high"
+      ? priorityParam
+      : "all";
+
   const [loadStatus, setLoadStatus] = useState<LoadStatus>("idle");
   const [loadError, setLoadError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -34,6 +47,40 @@ export function TasksPage() {
           next.set("search", value);
         } else {
           next.delete("search");
+        }
+
+        return next;
+      },
+      { replace: true },
+    );
+  }
+
+  function handleStatusChange(value: string) {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+
+        if (value === "all") {
+          next.delete("status");
+        } else {
+          next.set("status", value);
+        }
+
+        return next;
+      },
+      { replace: true },
+    );
+  }
+
+  function handlePriorityChange(value: string) {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+
+        if (value === "all") {
+          next.delete("priority");
+        } else {
+          next.set("priority", value);
         }
 
         return next;
@@ -110,6 +157,31 @@ export function TasksPage() {
         />
       </Section>
 
+      <Section title="Filter Tasks">
+        <label htmlFor="task-status-filter">Status:</label>
+        <select
+          id="task-status-filter"
+          value={status}
+          onChange={(event) => handleStatusChange(event.currentTarget.value)}
+        >
+          <option value="all">All</option>
+          <option value="open">Open</option>
+          <option value="done">Done</option>
+        </select>
+
+        <label htmlFor="task-priority-filter">Priority:</label>
+        <select
+          id="task-priority-filter"
+          value={priority}
+          onChange={(event) => handlePriorityChange(event.currentTarget.value)}
+        >
+          <option value="all">All</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </Section>
+
       <Section title={`Task List (${openTasksCount})`}>
         <button
           type="button"
@@ -133,6 +205,8 @@ export function TasksPage() {
           <TaskList
             tasks={tasks}
             searchTerm={searchTerm}
+            status={status}
+            priority={priority}
             onDelete={handleDeleteTask}
             onToggleStatus={handleToggleStatus}
           />
