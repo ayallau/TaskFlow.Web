@@ -101,6 +101,10 @@ export function TasksPage() {
 
   const visibleTasksCount = visibleTasks.length;
 
+  function handleClearFilters() {
+    setSearchParams({}, { replace: true });
+  }
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -192,6 +196,10 @@ export function TasksPage() {
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
+
+        <button type="button" onClick={handleClearFilters}>
+          Clear Filters
+        </button>
       </Section>
 
       <Section title={`Task List (${visibleTasksCount})`}>
