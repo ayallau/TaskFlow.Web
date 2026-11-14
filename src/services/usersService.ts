@@ -2,7 +2,7 @@ import { users } from "../data/users";
 import type { User } from "../types/user";
 
 export function getUsers(): User[] {
-  return users;
+  return structuredClone(users);
 }
 
 export function getUserById(id: string): User | undefined {

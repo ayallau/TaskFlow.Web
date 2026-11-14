@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router";
-import { users } from "../data/users";
+import { getUserById } from "../services/usersService";
 import { routePaths } from "../routes/routePaths";
 
 export function UserDetailsPage() {
@@ -9,7 +9,7 @@ export function UserDetailsPage() {
     return <p>Invalid user ID.</p>;
   }
 
-  const user = users.find((item) => item.id === id);
+  const user = getUserById(id);
 
   if (!user) {
     return <p>User not found.</p>;
