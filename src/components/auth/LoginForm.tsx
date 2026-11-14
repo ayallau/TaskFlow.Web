@@ -2,19 +2,26 @@ import { useState } from "react";
 import type { SubmitEvent } from "react";
 import type { LoginFormValues } from "../../types/loginFormValues";
 
-export function LoginForm() {
+type LoginFormProps = {
+  onLogin: (values: LoginFormValues) => boolean;
+};
+
+export function LoginForm({ onLogin }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    const values: LoginFormValues = {
-      email,
-      password,
-    };
 
-    console.log("Email:", values.email);
-    console.log("Password:", "***");
+    const success = onLogin({ email, password });
+
+    if (!success) {
+      setLoginError("Invalid email or password");
+      return;
+    }
+
+    setLoginError("");
   }
 
   return (
@@ -47,6 +54,7 @@ export function LoginForm() {
         />
       </div>
 
+      {loginError && <p role="alert">{loginError}</p>}
       <button type="submit">Login</button>
     </form>
   );

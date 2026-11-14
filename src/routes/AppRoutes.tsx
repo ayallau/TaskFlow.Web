@@ -9,8 +9,15 @@ import { AppLayout } from "../components/layout/AppLayout";
 import { routePaths } from "./routePaths";
 import { TaskDetailsPage } from "../pages/TaskDetailsPage";
 import { UserDetailsPage } from "../pages/UserDetailsPage";
+import type { AuthUser } from "../types/auth";
+import type { LoginFormValues } from "../types/loginFormValues";
 
-export function AppRoutes() {
+type AppRoutesProps = {
+  user: AuthUser | null;
+  onLogin: (values: LoginFormValues) => boolean;
+};
+
+export function AppRoutes({ user, onLogin }: AppRoutesProps) {
   return (
     <Routes>
       <Route element={<AppLayout />}>
@@ -22,7 +29,10 @@ export function AppRoutes() {
       </Route>
 
       <Route path={routePaths.about} element={<AboutPage />} />
-      <Route path={routePaths.login} element={<LoginPage />} />
+      <Route
+        path={routePaths.login}
+        element={<LoginPage user={user} onLogin={onLogin} />}
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
