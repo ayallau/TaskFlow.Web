@@ -16,13 +16,14 @@ import { ProtectedRoute } from "./ProtectedRoute";
 type AppRoutesProps = {
   user: AuthUser | null;
   onLogin: (values: LoginFormValues) => boolean;
+  onLogout: () => void;
 };
 
-export function AppRoutes({ user, onLogin }: AppRoutesProps) {
+export function AppRoutes({ user, onLogin, onLogout }: AppRoutesProps) {
   return (
     <Routes>
       <Route element={<ProtectedRoute user={user} />}>
-        <Route element={<AppLayout />}>
+        <Route element={<AppLayout onLogout={onLogout} />}>
           <Route path={routePaths.dashboard} element={<DashboardPage />} />
           <Route path={routePaths.tasks} element={<TasksPage />} />
           <Route path={routePaths.taskDetails} element={<TaskDetailsPage />} />

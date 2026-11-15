@@ -4,7 +4,11 @@ import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { MainContent } from "./MainContent";
 
-export function AppLayout() {
+type AppLayoutProps = {
+  onLogout: () => void;
+};
+
+export function AppLayout({ onLogout }: AppLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
     const storedValue = localStorage.getItem("taskflow.sidebarOpen");
 
@@ -18,6 +22,11 @@ export function AppLayout() {
   return (
     <>
       <Header title="TaskFlow" />
+      <div>
+        <button type="button" onClick={onLogout}>
+          Logout
+        </button>
+      </div>
 
       <button
         type="button"

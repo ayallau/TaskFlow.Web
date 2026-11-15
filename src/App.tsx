@@ -20,7 +20,11 @@ function App() {
     return true;
   }
 
-  return <AppRoutes user={user} onLogin={login} />;
+  function logout(): void {
+    setUser(null);
+  }
+
+  return <AppRoutes user={user} onLogin={login} onLogout={logout} />;
 }
 
 export default App;
