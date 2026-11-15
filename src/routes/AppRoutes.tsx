@@ -11,6 +11,7 @@ import { TaskDetailsPage } from "../pages/TaskDetailsPage";
 import { UserDetailsPage } from "../pages/UserDetailsPage";
 import type { AuthUser } from "../types/auth";
 import type { LoginFormValues } from "../types/loginFormValues";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 type AppRoutesProps = {
   user: AuthUser | null;
@@ -20,14 +21,15 @@ type AppRoutesProps = {
 export function AppRoutes({ user, onLogin }: AppRoutesProps) {
   return (
     <Routes>
-      <Route element={<AppLayout />}>
-        <Route path={routePaths.dashboard} element={<DashboardPage />} />
-        <Route path={routePaths.tasks} element={<TasksPage />} />
-        <Route path={routePaths.taskDetails} element={<TaskDetailsPage />} />
-        <Route path={routePaths.users} element={<UsersPage />} />
-        <Route path={routePaths.userDetails} element={<UserDetailsPage />} />
+      <Route element={<ProtectedRoute user={user} />}>
+        <Route element={<AppLayout />}>
+          <Route path={routePaths.dashboard} element={<DashboardPage />} />
+          <Route path={routePaths.tasks} element={<TasksPage />} />
+          <Route path={routePaths.taskDetails} element={<TaskDetailsPage />} />
+          <Route path={routePaths.users} element={<UsersPage />} />
+          <Route path={routePaths.userDetails} element={<UserDetailsPage />} />
+        </Route>
       </Route>
-
       <Route path={routePaths.about} element={<AboutPage />} />
       <Route
         path={routePaths.login}
