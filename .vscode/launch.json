@@ -19,7 +19,6 @@
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
       "preLaunchTask": "TaskFlow: Start Vite",
-      "postDebugTask": "TaskFlow: Stop Vite",
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "internalConsoleOptions": "neverOpen"
     },
@@ -31,6 +30,20 @@
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true
+    },
+    {
+      "type": "editor-browser",
+      "request": "launch",
+      "name": "React: Integrated Browser",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src"
+    },
+    {
+      "type": "editor-browser",
+      "request": "attach",
+      "name": "React: Attach Integrated Browser",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src"
     }
   ]
 }
