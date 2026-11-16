@@ -27,7 +27,10 @@ export function AppRoutes({ user, onLogin, onLogout }: AppRoutesProps) {
           <Route path={routePaths.dashboard} element={<DashboardPage />} />
           <Route path={routePaths.tasks} element={<TasksPage />} />
           <Route path={routePaths.taskDetails} element={<TaskDetailsPage />} />
-          <Route path={routePaths.users} element={<UsersPage />} />
+          <Route
+            path={routePaths.users}
+            element={<UsersPage role={user?.role} />}
+          />
           <Route path={routePaths.userDetails} element={<UserDetailsPage />} />
         </Route>
       </Route>
