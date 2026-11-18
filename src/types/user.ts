@@ -6,4 +6,5 @@ export type User = {
   role: UserRole;
   jobTitle: string;
   isActive: boolean;
+  email: string;
 };

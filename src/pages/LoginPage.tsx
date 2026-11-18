@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { LoginForm } from "../components/auth/LoginForm";
 import { Section } from "../components/shared/Section";
 import { routePaths } from "../routes/routePaths";
@@ -38,9 +38,12 @@ export function LoginPage({ user, onLogin }: LoginPageProps) {
   return (
     <Section title="Login">
       {user ? (
-        <p>
-          Logged in as {user.name} ({user.role})
-        </p>
+        <>
+          <p>
+            Logged in as {user.name} ({user.role})
+          </p>
+          <Link to={routePaths.dashboard}>Go to Dashboard</Link>
+        </>
       ) : (
         <LoginForm onLogin={handleLogin} />
       )}
