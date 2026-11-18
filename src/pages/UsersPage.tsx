@@ -11,32 +11,31 @@ type UsersPageProps = {
 
 export function UsersPage({ role }: UsersPageProps) {
   const isAdmin = role === "admin";
-  const users = getUsers();
+  const [users, setUsers] = useState(getUsers());
 
-  const [currentUser, setCurrentUser] = useState(users[0]);
-
-  function handlePromoteUser() {
-    setCurrentUser((prevUser) => ({
-      ...prevUser,
-      role: "Senior Developer",
-    }));
+  function handlePromoteUserTitle(userId: string) {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === userId && user.jobTitle.startsWith("Senior") === false
+          ? { ...user, jobTitle: `Senior ${user.jobTitle}` }
+          : user,
+      ),
+    );
   }
 
   return (
     <Section title="Users">
-      {isAdmin && (
-        <button type="button" onClick={handlePromoteUser}>
-          Promote User
-        </button>
-      )}
-
-      <Card>
-        <UserCard {...currentUser} />
-      </Card>
-
-      <Card>
-        <UserCard {...users[1]} />
-      </Card>
+      <>
+        {users.map((user) => (
+          <Card key={user.id}>
+            <UserCard
+              {...user}
+              isAdmin={isAdmin}
+              onPromoteUserTitle={handlePromoteUserTitle}
+            />
+          </Card>
+        ))}
+      </>
     </Section>
   );
 }
