@@ -11,6 +11,11 @@ export function getUserById(id: string): User | undefined {
   return user ? structuredClone(user) : undefined;
 }
 
+export function getUserByEmail(email: string): User | undefined {
+  const user = users.find((user) => user.email === email);
+  return user ? structuredClone(user) : undefined;
+}
+
 export function updateUser(updatedUser: User): boolean {
   return updateUserData(updatedUser);
 }

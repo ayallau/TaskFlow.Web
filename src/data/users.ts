@@ -7,6 +7,7 @@ export const users: User[] = [
     role: "admin",
     jobTitle: "Developer",
     isActive: true,
+    email: "ayal@taskflow.com",
   },
   {
     id: "2",
@@ -14,6 +15,7 @@ export const users: User[] = [
     role: "user",
     jobTitle: "UI/UX Designer",
     isActive: true,
+    email: "dana@taskflow.com",
   },
 ];
 

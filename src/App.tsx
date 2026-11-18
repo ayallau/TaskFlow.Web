@@ -2,21 +2,19 @@ import { useState } from "react";
 import { AppRoutes } from "./routes/AppRoutes";
 import type { AuthUser } from "./types/auth";
 import type { LoginFormValues } from "./types/loginFormValues";
+import { authenticate } from "./services/authService";
 
 function App() {
   const [user, setUser] = useState<AuthUser | null>(null);
 
   function login(values: LoginFormValues): boolean {
-    if (values.email !== "admin@example.com" || values.password !== "demo123") {
+    const authenticatedUser = authenticate(values);
+
+    if (!authenticatedUser) {
       return false;
     }
 
-    setUser({
-      id: "1",
-      name: "Admin",
-      role: "admin",
-    });
-
+    setUser(authenticatedUser);
     return true;
   }
 
