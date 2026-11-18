@@ -41,3 +41,13 @@ git show <commit-hash>
 git show --format= --no-ext-diff <commit-hash> > commit.diff
 
 git format-patch -1 <commit-hash>
+
+
+# Restore a file to its previous state
+git restore --source=HEAD~1 --staged -- path/to/file
+
+git restore --source=HEAD~1 --staged -- .vscode\tasks.json
+
+
+# Force push the changes to the remote repository
+git push --force-with-lease
