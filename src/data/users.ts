@@ -4,15 +4,24 @@ export const users: User[] = [
   {
     id: "1",
     name: "Ayal",
-    role: "Admin",
+    role: "admin",
     jobTitle: "Developer",
     isActive: true,
   },
   {
     id: "2",
     name: "Dana",
-    role: "User",
+    role: "user",
     jobTitle: "UI/UX Designer",
     isActive: true,
   },
 ];
+
+export function updateUserData(updatedUser: User): boolean {
+  const index = users.findIndex((user) => user.id === updatedUser.id);
+  if (index !== -1) {
+    users[index] = updatedUser;
+    return true;
+  }
+  return false;
+}
